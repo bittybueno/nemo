@@ -14,7 +14,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/events/:id" component={LinkToQuestions} />
       <Route exact path="/" component={App} />
-      <Route path="/question-board" component={QuestionBoard} />
+      {/* <Route path="/question-board" component={QuestionBoard} /> */}
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")

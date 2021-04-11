@@ -1,29 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Form } from "react-bootstrap";
 
-export default class CreateEvent extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      title: "",
-      desc: "",
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+export function CreateEvent() {
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
 
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  }
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
 
-  handleSubmit(event) {
+  const handleDescChange = (e) => {
+    setDesc(e.target.value);
+  };
+
+  const handleSubmit = () => {
     axios
       .post(`/events`, {
-        title: this.state.title,
-        desc: this.state.desc,
+        title: title,
+        desc: desc,
       })
       .then((res) => {
         console.log(res.data);
@@ -31,35 +26,32 @@ export default class CreateEvent extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-    event.target.reset();
-  }
+  };
 
-  render() {
-    return (
-      <Form className="create-event-form" onSubmit={this.handleSubmit}>
-        <div className="input">
-          <Form.Label>Event Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="title"
-            onChange={this.handleChange}
-            placeholder="Enter Event Name"
-          />
-        </div>
-        <div className="input">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            type="text"
-            name="desc"
-            onChange={this.handleChange}
-            placeholder="Description"
-          />
-        </div>
+  return (
+    <Form className="create-event-form" onSubmit={handleSubmit}>
+      <div className="input">
+        <Form.Label>Event Name</Form.Label>
+        <Form.Control
+          type="text"
+          name="title"
+          onChange={handleTitleChange}
+          placeholder="Enter Event Name"
+        />
+      </div>
+      <div className="input">
+        <Form.Label>Description</Form.Label>
+        <Form.Control
+          type="text"
+          name="desc"
+          onChange={handleDescChange}
+          placeholder="Description"
+        />
+      </div>
 
-        <button className="blue-button" type="submit">
-          Add
-        </button>
-      </Form>
-    );
-  }
+      <button className="blue-button" type="submit">
+        Add
+      </button>
+    </Form>
+  );
 }
